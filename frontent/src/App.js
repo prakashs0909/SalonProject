@@ -10,6 +10,7 @@ import AdminService from './components/AdminService';
 import MaybeShowNavbar from './components/MaybeShowNavbar';
 import MaybeShowAlert from './components/MaybeShowAlert';
 import AppointmentList from './components/AppointmentList';
+import Signup from './components/Signup';
 import { AuthProvider } from './context/AuthContext';
 import React, {useState} from 'react';
 import Alerts from './components/Alerts';
@@ -53,6 +54,7 @@ const App = ()=>{
             <Route exact path="/Contact" Component={Contact} />
             <Route exact path="/AppointmentList" Component={AppointmentList} />
             <Route exact path="/login" Component={Login} />
+            <Route exact path="/Signup" Component={Signup} />
             <Route exact path="/AdminService" Component={AdminService} />
           </Routes>
         </BrowserRouter>
