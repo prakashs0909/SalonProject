@@ -6,7 +6,7 @@ from django.utils import timezone
 from rest_framework import viewsets
 
 class AppointmentListView(generics.ListCreateAPIView):
-    queryset = Appointment.objects.all()
+    queryset = Appointment.objects.all().order_by('-id')
     serializer_class = AppointmentSerializer
 
     def perform_create(self, serializer):
@@ -19,7 +19,7 @@ class AppointmentListView(generics.ListCreateAPIView):
         serializer.save()
 
 class AppointmentDetailView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Appointment.objects.all()
+    queryset = Appointment.objects.all().order_by('-id')
     serializer_class = AppointmentSerializer
 
     def perform_update(self, serializer):

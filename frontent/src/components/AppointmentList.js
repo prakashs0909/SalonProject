@@ -167,13 +167,15 @@ const AppointmentList = () => {
           </svg>{" "}
         </button>{" "}
       </ul>{" "}
-      <ol className="list-group list-group-numbered mt-16 p-4 fs-5 ">
-        {" "}
         {appointments.map((appointment) => (
           <li
-            key={appointment.id}
-            className="bg-gray-100 border border-gray-300 mb-4 p-4 rounded-lg shadow-md d-flex"
+          key={appointment.id}
+          className="bg-gray-100 border border-gray-300 mb-4 p-4 rounded-lg shadow-md d-flex "
           >
+              <div className="fw-bold text-1xl ">
+                {appointment.id}
+              </div>{" "}
+            
             {" "}
             <div className="ms-2 me-auto">
               {" "}
@@ -196,7 +198,6 @@ const AppointmentList = () => {
             </div>{" "}
           </li>
         ))}{" "}
-      </ol>{" "}
     </div>
   );
 };
