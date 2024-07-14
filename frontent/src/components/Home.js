@@ -1,5 +1,7 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { HairCuttingIcon, BeardShavingIcon, HairColouringIcon, HairStylingIcon, FacialTreatmentsIcon, ScalpTreatmentIcon } from "./Icons"; // Adjust the path as per your project structure
+
 
 const Home = () => {
   const navigate = useNavigate();
@@ -49,118 +51,14 @@ const Home = () => {
         </div>
       </div>
 
-      <section className="text-gray-600 body-font">
-        <div className="container px-5 py-24 mx-auto">
-          <div className="flex items-center lg:w-3/5 mx-auto border-b pb-10 mb-10 border-gray-200 sm:flex-row flex-col">
-            <div className="sm:w-32 sm:h-32 h-20 w-20 sm:mr-10 inline-flex items-center justify-center rounded-full bg-purple-100 text-purple-500 flex-shrink-0">
-              <svg
-                fill="none"
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                className="sm:w-16 sm:h-16 w-10 h-10"
-                viewBox="0 0 24 24"
-              >
-                <circle cx="6" cy="6" r="3"></circle>
-                <circle cx="6" cy="18" r="3"></circle>
-                <path d="M20 4L8.12 15.88M14.47 14.48L20 20M8.12 8.12L12 12"></path>
-              </svg>
-            </div>
-            <div className="flex-grow sm:text-left text-center mt-6 sm:mt-0">
-              <h2 className="text-gray-900 text-lg title-font font-medium mb-2">
-                Cutting
-              </h2>
-              <p className="leading-relaxed text-base">
-                Hair cutting is the art and technique of shaping and styling
-                hair to achieve desired looks and textures.
-              </p>
-            </div>
-          </div>
-          <div className="flex items-center lg:w-3/5 mx-auto border-b pb-10 mb-10 border-gray-200 sm:flex-row flex-col">
-            <div className="flex-grow sm:text-left text-center mt-6 sm:mt-0">
-              <h2 className="text-gray-900 text-lg title-font font-medium mb-2">
-                Shaving
-              </h2>
-              <p className="leading-relaxed text-base">
-                Beard shaving involves trimming and shaping facial hair to
-                maintain a desired length and style.
-              </p>
-            </div>
-            <div className="sm:w-32 sm:order-none order-first sm:h-32 h-20 w-20 sm:ml-10 inline-flex items-center justify-center rounded-full bg-purple-100 text-purple-500 flex-shrink-0">
-              <svg
-                width="200"
-                height="200"
-                viewBox="0 0 200 200"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M50 100 C40 140, 60 180, 100 170 C140 180, 160 140, 150 100 C140 80, 110 60, 100 60 C90 60, 60 80, 50 100 Z"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="3"
-                />
-                <circle
-                  cx="100"
-                  cy="60"
-                  r="30"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="3"
-                />
-              </svg>
-            </div>
-          </div>
-          <div className="flex items-center lg:w-3/5 mx-auto sm:flex-row flex-col">
-            <div className="sm:w-32 sm:h-32 h-20 w-20 sm:mr-10 inline-flex items-center justify-center rounded-full bg-purple-100 text-purple-500 flex-shrink-0">
-              <svg
-                width="200"
-                height="200"
-                viewBox="0 0 200 200"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <g fill="none" stroke="currentColor" strokeWidth="5">
-                  <rect
-                    x="60"
-                    y="20"
-                    width="80"
-                    height="20"
-                    fill="currentColor"
-                  />
-                  <path d="M70 40 L130 40 L140 150 L60 150 Z" fill="none" />
-                  <line
-                    x1="60"
-                    y1="150"
-                    x2="70"
-                    y2="170"
-                    stroke="currentColor"
-                  />
-                  <line
-                    x1="140"
-                    y1="150"
-                    x2="130"
-                    y2="170"
-                    stroke="currentColor"
-                  />
-                  <line
-                    x1="70"
-                    y1="170"
-                    x2="130"
-                    y2="170"
-                    stroke="currentColor"
-                  />
-                </g>
-              </svg>
-            </div>
-            <div className="flex-grow sm:text-left text-center mt-6 sm:mt-0">
-              <h2 className="text-gray-900 text-lg title-font font-medium mb-2">
-                Hair Colouring
-              </h2>
-              <p className="leading-relaxed text-base">
-                Hair coloring is the process of changing the hair's color using
-                various dyes to achieve a desired look or cover gray hairs.
-              </p>
-            </div>
+      <section className="text-gray-600 body-font bg-gray-100 py-24">
+        <div className="container px-5 mx-auto">
+          <h2 className="text-3xl font-medium text-center text-gray-900 mb-16">Our Services</h2>
+          <div className="flex flex-wrap -m-4">
+            {/* Service Cards */}
+            {services.map((service, index) => (
+              <ServiceCard key={index} service={service} />
+            ))}
           </div>
         </div>
       </section>
@@ -169,7 +67,7 @@ const Home = () => {
         <div className="container px-5 py-24 mx-auto flex flex-wrap">
           <div className="flex w-full mb-20 flex-wrap">
             <h1 className="sm:text-3xl text-2xl font-medium title-font text-gray-900 lg:w-1/3 lg:mb-0 mb-4">
-              Cutting Styles
+              Photo Gallery
             </h1>
           </div>
           <div className="flex flex-wrap md:-m-2 -m-1">
@@ -267,7 +165,7 @@ c-6.972-3.24-4.1-21.988-4.1-21.988S355.733,141.183,347.291,116.456z"
                 />
               </g>
             </svg>
-            <span className="ml-3 text-xl">Salon</span>
+            <span className="ml-3 text-xl pt-3">Salon</span>
           </Link>
           <p className="text-sm text-gray-500 sm:ml-4 sm:pl-4 sm:border-l-2 sm:border-gray-700 sm:py-2 sm:mt-0 mt-4">
             © 2024 Salon —
@@ -359,6 +257,59 @@ c-6.972-3.24-4.1-21.988-4.1-21.988S355.733,141.183,347.291,116.456z"
           </span>
         </div>
       </footer>
+    </div>
+  );
+};
+
+const services = [
+  {
+    icon: <HairCuttingIcon />,
+    title: "Hair Cutting",
+    description: "Shaping and styling hair to achieve desired looks and textures."
+  },
+  {
+    icon: <BeardShavingIcon />,
+    title: "Beard Shaving/Trimming",
+    description: "Trimming and shaping facial hair to maintain a desired length and style."
+  },
+  {
+    icon: <HairColouringIcon />,
+    title: "Hair Colouring",
+    description: "Changing the hair's color using various dyes to achieve a desired look or cover gray hairs."
+  },
+  {
+    icon: <HairStylingIcon />,
+    title: "Hair Styling",
+    description: "Styling hair for special occasions or daily wear."
+  },
+  {
+    icon: <FacialTreatmentsIcon />,
+    title: "Facial Treatments",
+    description: "Skin care treatments such as facial cleansing, exfoliation, and moisturizing."
+  },
+  {
+    icon: <ScalpTreatmentIcon />,
+    title: "Scalp Treatments",
+    description: "Treatments aimed at improving scalp health and hair growth."
+  }
+];
+
+const ServiceCard = ({ service }) => {
+  return (
+    <div className="p-4 lg:w-1/3 md:w-1/2">
+      <div className="h-full bg-white shadow-sm rounded-lg overflow-hidden transition duration-300 ease-in-out transform hover:scale-105">
+        <div className="p-6 text-center">
+          <div className="flex items-center justify-center mb-4">
+            {service.icon}
+          </div>
+          <h2 className="text-lg tracking-widest font-medium text-gray-900 mb-3">
+            {service.title}
+          </h2>
+          <p className="leading-relaxed text-base text-gray-700 mb-3">
+            {service.description}
+          </p>
+        </div>
+      </div>
     </div>
   );
 };

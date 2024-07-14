@@ -107,6 +107,14 @@ const BookingForm = (props) => {
       });
   };
 
+  const capitalize = (word)=>{
+    if (word==="danger") {
+      word = "error"
+    }
+      const lower = word.toLowerCase();
+      return lower.charAt(0).toUpperCase() + lower.slice(1);
+  };
+
   return (
     <div>
       <ul className="flex items-center justify-between bg-gray-800 p-4 fixed-top">
@@ -229,7 +237,7 @@ const BookingForm = (props) => {
                       className="form-check-input mt-0"
                     />
                     <label htmlFor={service} className="ml-2 text-gray-700">
-                      {service.name}
+                      {capitalize(service.name)}
                     </label>
                   </div>
                 ))}
@@ -293,7 +301,7 @@ c-6.972-3.24-4.1-21.988-4.1-21.988S355.733,141.183,347.291,116.456z"
                 />
               </g>
             </svg>
-            <span className="ml-3 text-xl">Salon</span>
+            <span className="ml-3 text-xl pt-3">Salon</span>
           </Link>
           <p className="text-sm text-gray-500 sm:ml-4 sm:pl-4 sm:border-l-2 sm:border-gray-700 sm:py-2 sm:mt-0 mt-4">
             © 2024 Salon —

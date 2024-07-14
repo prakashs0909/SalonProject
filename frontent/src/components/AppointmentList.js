@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
-import api from "../services/api"
+import api from "../services/api";
 
 const AppointmentList = () => {
   const [appointments, setAppointments] = useState([]);
@@ -106,12 +106,17 @@ const AppointmentList = () => {
       console.error("Logout error:", error);
     }
   };
-  const capitalize = (word)=>{
-    if (word==="danger") {
-      word = "error"
+  const capitalize = (word) => {
+    if (word === "danger") {
+      word = "error";
     }
-      const lower = word.toLowerCase();
-      return lower.charAt(0).toUpperCase() + lower.slice(1);
+    const lower = word.toLowerCase();
+    return lower.charAt(0).toUpperCase() + lower.slice(1);
+  };
+
+  const handleclick = () =>{
+    document.getElementById("button").value="Close";
+    console.log("click")
   }
 
   return (
@@ -167,16 +172,13 @@ const AppointmentList = () => {
           </svg>{" "}
         </button>{" "}
       </ul>{" "}
+      <div className="mt-16 p-3">
         {appointments.map((appointment) => (
           <li
-          key={appointment.id}
-          className="bg-gray-100 border border-gray-300 mb-4 p-4 rounded-lg shadow-md d-flex "
+            key={appointment.id}
+            className="bg-gray-100 border border-gray-300 mb-4 p-4 rounded-lg shadow-md d-flex fs-5 "
           >
-              <div className="fw-bold text-1xl ">
-                {appointment.id}
-              </div>{" "}
-            
-            {" "}
+            <div className="fw-bold text-1xl  ">{appointment.id}</div>{" "}
             <div className="ms-2 me-auto">
               {" "}
               <div className="fw-bold text-1xl ">
@@ -196,8 +198,12 @@ const AppointmentList = () => {
               </p>{" "}
               {renderChecklist(appointment, toggleChecklistItemStatus)}{" "}
             </div>{" "}
+            <div className=" d-flex align-items-end ">
+              <button className="btn btn-outline-success" id ="button" onClick={()=>handleclick()}>done</button>
+            </div>
           </li>
         ))}{" "}
+      </div>
     </div>
   );
 };
@@ -208,25 +214,18 @@ const renderChecklist = (appointment, toggleChecklistItemStatus) => {
   }
 
   return (
-    <div className="mt-2">
-      <p className="font-semibold">Checklist:</p>
-      <ul className="list-none">
+    <div className="mt-2  ">
+      <ul className="list-none ">
+        <p className="font-semibold">List:</p>
         {appointment.checklist.map((item, index) => (
-          <li key={index} className="flex items-center py-2">
-            <input
+          <li key={index} className="flex items-center py-1 ">
+            {/* <input
               type="checkbox"
               checked={item.done}
               onChange={() => toggleChecklistItemStatus(appointment.id, index)}
               className="mr-2"
-            />
-            <span
-              className={
-                item.done ? "line-through text-gray-500" : "text-gray-700"
-              }
-            >
-              {item.text.name}{" "}
-              {/* Assuming the text object has a name property */}
-            </span>
+            /> */}
+            <span className="">{item.text.name} </span>
           </li>
         ))}
       </ul>

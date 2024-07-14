@@ -19,6 +19,24 @@ const Price = () => {
 
     fetchServices();
   }, []);
+
+  const capitalize = (word)=>{
+    if (word==="danger") {
+      word = "error"
+    }
+      const lower = word.toLowerCase();
+      return lower.charAt(0).toUpperCase() + lower.slice(1);
+  }
+
+  // let a = service.time
+  // let b;
+  //   if(a <= 5){
+  //       console.log(a);
+  //       b= 'hrs'
+  //   } 
+  //   else {
+  //       b= 'min';
+  //   }
   return (
     <div>
       <section className="text-gray-600 body-font">
@@ -32,7 +50,7 @@ const Price = () => {
               <div className="carousel-inner">
                 <div className="carousel-item active" data-bs-interval="300">
                   <img
-                    src="https://i.pinimg.com/736x/4a/76/0c/4a760c9f098e6ffbc502f32d34c0f20b.jpg"
+                    src="https://st3.depositphotos.com/12039320/16154/i/450/depositphotos_161544120-stock-photo-hairstylist-washing-clients-hair.jpg"
                     className="d-block w-full object-cover object-center rounded-lg"
                     style={{ aspectRatio: "16/9" }}
                     alt="Haircut 1"
@@ -48,7 +66,7 @@ const Price = () => {
                 </div>
                 <div className="carousel-item">
                   <img
-                    src="https://st3.depositphotos.com/12039320/16154/i/450/depositphotos_161544120-stock-photo-hairstylist-washing-clients-hair.jpg"
+                    src="https://i.pinimg.com/736x/4a/76/0c/4a760c9f098e6ffbc502f32d34c0f20b.jpg"
                     className="d-block w-full object-cover object-center rounded-lg"
                     style={{ aspectRatio: "16/9" }}
                     alt="Haircut 3"
@@ -86,7 +104,7 @@ const Price = () => {
             <h1 className="sm:text-4xl text-3xl font-medium title-font text-gray-900 mb-4">
               Services List
             </h1>
-            <p className="lg:w-2/3 mx-auto leading-relaxed text-base text-gray-500">
+            <p className="lg:w-2/3 mx-auto leading-relaxed text-base text-gray-500 px-2">
               A service list outlines available offerings, detailing services
               and prices provided by a business.
             </p>
@@ -99,13 +117,13 @@ const Price = () => {
                 <div className="p-4" key={service.id}>
                   <div className="bg-white rounded-lg p-6 border border-gray-300 shadow-md">
                     <h2 className="text-xl font-semibold text-gray-900 mb-4">
-                      {service.name}
+                      {capitalize(service.name)}
                     </h2>
-                    <p className="text-lg text-purple-500 mb-2 font-medium">
+                    <p className="text-lg text-gray-800 mb-2 font-medium">
                       Rs {service.price}
                     </p>
                     {/* Example time, replace with actual service time */}
-                    <p className="text-gray-600 mb-2">Time: {service.time}</p>
+                    <p className="text-gray-600 mb-2">Time: {service.time} min</p>
                   </div>
                 </div>
               ))
@@ -158,7 +176,7 @@ c-6.972-3.24-4.1-21.988-4.1-21.988S355.733,141.183,347.291,116.456z"
                 />
               </g>
             </svg>
-            <span className="ml-3 text-xl">Salon</span>
+            <span className="ml-3 text-xl pt-3">Salon</span>
           </Link>
           <p className="text-sm text-gray-500 sm:ml-4 sm:pl-4 sm:border-l-2 sm:border-gray-700 sm:py-2 sm:mt-0 mt-4">
             © 2024 Salon —

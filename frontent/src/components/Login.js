@@ -29,7 +29,7 @@ const Login = () => {
         <div className="flex min-h-full flex-col justify-center mt-11 px-6 py-16 lg:px-8">
             <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                 <img className="mx-auto h-10 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="Your Company" />
-                <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Admin Login</h2>
+                <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Login</h2>
             </div>
 
             <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
@@ -57,8 +57,11 @@ const Login = () => {
                         <button type="submit" className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Login</button>
                     </div>
 
-                    <div>
-                        <button type="submit" className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" onClick={()=> navigate('/Signup')}>Signup</button>
+                    <div className='d-flex'>
+                        <div className='mx-4 pt-1 font-bold'>
+                            <p>Create a new account</p>
+                        </div>
+                        <button type="submit" className="flex justify-center rounded-md bg-green-600 mx-3 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" onClick={()=> navigate('/Signup')}>Sign Up</button>
                     </div>
                 </form>
 

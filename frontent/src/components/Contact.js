@@ -115,7 +115,7 @@ c-6.972-3.24-4.1-21.988-4.1-21.988S355.733,141.183,347.291,116.456z"
                 />
               </g>
             </svg>
-            <span className="ml-3 text-xl">Salon</span>
+            <span className="ml-3 text-xl pt-3">Salon</span>
           </Link>
           <p className="text-sm text-gray-500 sm:ml-4 sm:pl-4 sm:border-l-2 sm:border-gray-700 sm:py-2 sm:mt-0 mt-4">
             © 2024 Salon —

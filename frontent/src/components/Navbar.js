@@ -20,12 +20,12 @@ const Navbar = () => {
     d = "Admin Service"
   } else {
     a = "/login";
-    b = "Admin Login"
+    b = "Login"
   }
 
   return (
     <header className="bg-gray-800 text-gray-600 body-font fixed-top">
-      <div className="container mx-auto flex flex-wrap p-3 flex-row items-center justify-between">
+      <div className="container mx-auto flex flex-wrap p-3 flex-row items-center justify-between ">
         <div className="flex items-center">
           <Link
             className="flex title-font font-medium items-center text-white"
@@ -68,7 +68,7 @@ const Navbar = () => {
                 />
               </g>
             </svg>
-            <span className="ml-3 text-xl">Salon</span>
+            <span className="ml-3 text-xl ">CoolCuts</span>
           </Link>
         </div>
         <div className="md:hidden flex items-center">
@@ -92,35 +92,35 @@ const Navbar = () => {
           }`}
         >
           <Link
-            className="block md:inline-block mt-4 md:mt-0 mr-5 hover:text-violet-400 text-white"
+            className="block md:inline-block p-2 md:mt-0 mr-5 hover:text-violet-400 text-white md:text-lg"
             to="/"
             onClick={closeMenu}
           >
             Home
           </Link>
           <Link
-            className="block md:inline-block mt-4 md:mt-0 mr-5 hover:text-violet-400 text-white"
+            className="block md:inline-block p-2 md:mt-0 mr-5 hover:text-violet-400 text-white md:text-lg"
             to="/Price"
             onClick={closeMenu}
           >
             Price
           </Link>
           <Link
-            className="block md:inline-block mt-4 md:mt-0 mr-5 hover:text-violet-400 text-white"
+            className="block md:inline-block p-2 md:mt-0 mr-5 hover:text-violet-400 text-white md:text-lg"
             to="/BookingForm"
             onClick={closeMenu}
           >
             Book Now
           </Link>
           <Link
-            className="block md:inline-block mt-4 md:mt-0 mr-5 hover:text-violet-400 text-white"
+            className="block md:inline-block p-2 md:mt-0 mr-5 hover:text-violet-400 text-white md:text-lg"
             to="/Contact"
             onClick={closeMenu}
           >
             Contact Us
           </Link>
           <Link
-            className="block md:inline-block mt-4 md:mt-0 mr-5 hover:text-violet-400 text-white"
+            className="block md:inline-block p-2 md:mt-0 mr-5 hover:text-violet-400 text-white md:text-lg"
             to="/About"
             onClick={closeMenu}
           >
@@ -128,14 +128,14 @@ const Navbar = () => {
           </Link>
 
           <Link
-            className="block md:inline-block mt-4 md:mt-0 mr-5 hover:text-violet-400 text-white"
+            className="block md:inline-block p-2 md:mt-0 mr-5 hover:text-violet-400 text-white md:text-lg"
             to={a}
             onClick={closeMenu}
           >
             {b}
           </Link>
           <Link
-            className="block md:inline-block mt-4 md:mt-0 mr-5 hover:text-violet-400 text-white"
+            className="block md:inline-block p-2 md:mt-0 mr-5 hover:text-violet-400 text-white md:text-lg"
             to={c}
             onClick={closeMenu}
           >

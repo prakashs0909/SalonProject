@@ -8,7 +8,7 @@ import {
 
 const AdminService = () => {
   const [services, setServices] = useState([]);
-  const [newService, setNewService] = useState({ name: "", price: "" });
+  const [newService, setNewService] = useState({ name: "", price: "", time: "" });
   const [editingService, setEditingService] = useState(null);
 
   useEffect(() => {
@@ -29,7 +29,7 @@ const AdminService = () => {
     createService(newService)
       .then((response) => {
         setServices([...services, response.data]);
-        setNewService({ name: "", price: "" });
+        setNewService({ name: "", price: "", time: "" });
       })
       .catch((error) => {
         console.error("There was an error creating the service!", error);
@@ -70,6 +70,14 @@ const AdminService = () => {
     setEditingService({ ...editingService, [name]: value });
   };
 
+  const capitalize = (word)=>{
+    if (word==="danger") {
+      word = "error"
+    }
+      const lower = word.toLowerCase();
+      return lower.charAt(0).toUpperCase() + lower.slice(1);
+  }
+
   return (
     <div>
       <div className="mt-16 bg-gray-200">
@@ -92,6 +100,14 @@ const AdminService = () => {
             name="price"
             placeholder="Price"
             value={newService.price}
+            onChange={handleInputChange}
+            className="block rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-600 pl-2 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 mb-2"
+          />
+          <input
+            type="number"
+            name="time"
+            placeholder="Time"
+            value={newService.time}
             onChange={handleInputChange}
             className="block rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-600 pl-2 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 mb-2"
           />
@@ -150,20 +166,22 @@ const AdminService = () => {
         <table>
           <thead>
             <tr>
-              <th className="fs-5 px-3">ID</th>
+              {/* <th className="fs-5 px-3">ID</th> */}
               <th className="fs-5 px-3">Name</th>
               <th className="fs-5 px-3"> Price</th>
+              <th className="fs-5 px-3"> Time</th>
               <th className="fs-5 px-3">Actions</th>
             </tr>
           </thead>
           <tbody>
             {services.map((service) => (
               <tr key={service.id}>
-                <td className="px-3">{service.id}</td>
-                <td className="px-3">{service.name}</td>
-                <td className="px-3">{service.price}</td>
-                <td className="px-3 d-flex">
-                  <div className="mr-2">
+                {/* <td className="px-3">{service.id}</td> */}
+                <td className="px-3">{capitalize(service.name)}</td>
+                <td className="px-3">{service.price}</td> 
+                <td className="pl-3">{service.time} min</td> 
+                <td className="pl-3 d-flex">
+                  <div className="mr-2 ">
                     <button
                       className=" bg-purple-600 text-white px-3 rounded-md shadow-sm hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-opacity-50 "
                       onClick={() => setEditingService(service)}

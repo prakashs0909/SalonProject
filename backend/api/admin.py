@@ -7,7 +7,7 @@ class AppointmentAdmin(admin.ModelAdmin):
 
 @admin.register(Service)
 class ServiceAdmin(admin.ModelAdmin):
-    list_display =('name' , 'price')
+    list_display =('name' , 'price', 'time')
 # # or the simpler way to register without customizing the admin view
 # admin.site.register(Service)
 
