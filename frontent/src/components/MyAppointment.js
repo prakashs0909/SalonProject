@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../context/AuthContext'; // Import your AuthContext
-import api from "../services/api"
+
 
 const MyAppointments = () => {
   const [appointments, setAppointments] = useState([]);
@@ -14,11 +14,8 @@ const MyAppointments = () => {
       // if (!user) return; // If no user is logged in, return early
       try {
         if(user){
-        const response = await axios.get('http://127.0.0.1:8000/appointments/appointments/', {
-          headers: {
-            'Authorization': `Bearer ${user.token}`, // Include the user's token in the headers
-          }
-        });
+          console.log(user)
+        const response = await axios.get('http://127.0.0.1:8000/api/user/appointments/');
         setAppointments(response.data);
         // setLoading(false);
       }
@@ -40,7 +37,8 @@ const MyAppointments = () => {
       <ul>
         {appointments.map(appointment => (
           <li key={appointment.id}>
-            {appointment.customer_name} - {appointment.appointment_date} at {appointment.appointment_time}
+            
+            {appointment.customer_name} - {appointment.appointment_date} at {appointment.appointment_time} with user id {appointment.user}
           </li>
         ))}
       </ul>
