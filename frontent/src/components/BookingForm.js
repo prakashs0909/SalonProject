@@ -6,6 +6,7 @@ const BookingForm = (props) => {
   const navigate = useNavigate();
 
   const [appointmentData, setAppointmentData] = useState({
+    user :" ",
     customer_name: "",
     appointment_date: "",
     appointment_time: "",
@@ -92,6 +93,7 @@ const BookingForm = (props) => {
       .then((response) => {
         console.log("Appointment booked successfully:", response.data);
         setAppointmentData({
+          user : " ",
           customer_name: "",
           appointment_date: "",
           appointment_time: "",
@@ -148,6 +150,27 @@ const BookingForm = (props) => {
             Book Appointment
           </h2>
           <div className="mb-4">
+            
+            
+            <label
+              htmlFor="username"
+              className="block text-gray-700 font-medium"
+            >
+              User Name:
+              <input
+                type="number"
+                className="form-input mt-1 block w-full h-12 border-gray-300 rounded-md shadow-sm focus:border-purple-400 focus:ring focus:ring-purple-400 focus:ring-opacity-50 px-3"
+                id="user"
+                placeholder="Enter your name"
+                value={appointmentData.user}
+                onChange={(e) =>
+                  setAppointmentData({
+                    ...appointmentData,
+                    user: e.target.value,
+                  })
+                }
+              />
+            </label>
             <label
               htmlFor="customerName"
               className="block text-gray-700 font-medium"

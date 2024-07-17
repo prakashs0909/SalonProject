@@ -130,23 +130,6 @@ const Price = () => {
             {loading ? (
               <p>Loading services...</p>
             ) : (result
-              // <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-0">
-              //   { result }
-              // </div>
-              // services.map((service) => (
-              //   <div className="p-4" key={service.id}>
-              //     <div className="bg-white rounded-lg p-6 border border-gray-300 shadow-md">
-              //       <h2 className="text-xl font-semibold text-gray-900 mb-4">
-              //         {capitalize(service.name)}
-              //       </h2>
-              //       <p className="text-lg text-gray-800 mb-2 font-medium">
-              //         Rs {service.price}
-              //       </p>
-              //       {/* Example time, replace with actual service time */}
-              //       <p className="text-gray-600 mb-2">Time: {service.time} {} </p>
-              //     </div>
-              //   </div>
-              // ))
             )}
           </div>
         </div>

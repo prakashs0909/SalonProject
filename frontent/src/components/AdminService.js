@@ -208,9 +208,8 @@ const AdminService = () => {
               <th className="fs-5 px-3">Actions</th>
             </tr>
           </thead>
-            {result}
           <tbody>
-            
+            {result}
           </tbody>
         </table>
       </div>

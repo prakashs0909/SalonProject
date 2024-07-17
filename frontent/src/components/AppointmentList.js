@@ -5,15 +5,11 @@ import { Link, useNavigate } from "react-router-dom";
 import api from "../services/api";
 
 const AppointmentList = () => {
+  const [color, setColor] = useState("red");
   const [appointments, setAppointments] = useState([]);
-  const [color , setColor ] = useState("light")
   const { user } = useContext(AuthContext);
   const { logout } = useContext(AuthContext);
   const navigate = useNavigate();
-
-  const click = () => {
-    if (color !== "light") setColor("ligth"); else setColor("dark")
-  }
 
   useEffect(() => {
     const fetchAppointments = async () => {
@@ -30,9 +26,13 @@ const AppointmentList = () => {
     };
 
     fetchAppointments();
-     
   }, [user]);
 
+
+
+  const handleClick = () => {
+    setColor(prevColor => (prevColor === "red" ? "blue" : "red"));
+  };
   const toggleChecklistItemStatus = async (appointmentId, itemIndex) => {
     try {
       const appointment = appointments.find((app) => app.id === appointmentId);
@@ -119,7 +119,7 @@ const AppointmentList = () => {
     const lower = word.toLowerCase();
     return lower.charAt(0).toUpperCase() + lower.slice(1);
   };
-   
+
   return (
     <div>
       {" "}
@@ -200,7 +200,13 @@ const AppointmentList = () => {
               {renderChecklist(appointment, toggleChecklistItemStatus)}{" "}
             </div>{" "}
             <div className=" d-flex align-items-end ">
-              <button className="btn " onClick={click}>done</button>
+            <button
+      className="btn"
+      style={{ color: color }}
+      onClick={handleClick}
+    >
+      Done
+    </button>
             </div>
           </li>
         ))}{" "}
@@ -228,6 +234,7 @@ const renderChecklist = (appointment, toggleChecklistItemStatus) => {
             /> */}
             <span className="">{item.text.name} </span>
           </li>
+          
         ))}
       </ul>
     </div>
