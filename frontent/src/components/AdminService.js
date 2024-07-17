@@ -77,6 +77,41 @@ const AdminService = () => {
       const lower = word.toLowerCase();
       return lower.charAt(0).toUpperCase() + lower.slice(1);
   }
+  let result;
+  result = services.map((service) => {
+    let unit;
+    if (service.time <= 5) {
+      unit = "hrs";
+    } else {
+      unit = "min";
+    }
+    return (
+      <tr key={service.id}>
+                {/* <td className="px-3">{service.id}</td> */}
+                <td className="px-3">{capitalize(service.name)}</td>
+                <td className="px-3">{service.price}</td> 
+                <td className="pl-3">{service.time} {unit} </td> 
+                <td className="pl-3 d-flex">
+                  <div className="mr-2 ">
+                    <button
+                      className=" bg-purple-600 text-white px-3 rounded-md shadow-sm hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-opacity-50 "
+                      onClick={() => setEditingService(service)}
+                    >
+                      Edit
+                    </button>
+                  </div>
+                  <div className="mr-2">
+                    <button
+                      className=" bg-purple-600 text-white px-3 rounded-md shadow-sm hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-opacity-50"
+                      onClick={() => handleDeleteService(service.id)}
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </td>
+              </tr>
+    );
+  });
 
   return (
     <div>
@@ -173,33 +208,9 @@ const AdminService = () => {
               <th className="fs-5 px-3">Actions</th>
             </tr>
           </thead>
+            {result}
           <tbody>
-            {services.map((service) => (
-              <tr key={service.id}>
-                {/* <td className="px-3">{service.id}</td> */}
-                <td className="px-3">{capitalize(service.name)}</td>
-                <td className="px-3">{service.price}</td> 
-                <td className="pl-3">{service.time} min</td> 
-                <td className="pl-3 d-flex">
-                  <div className="mr-2 ">
-                    <button
-                      className=" bg-purple-600 text-white px-3 rounded-md shadow-sm hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-opacity-50 "
-                      onClick={() => setEditingService(service)}
-                    >
-                      Edit
-                    </button>
-                  </div>
-                  <div className="mr-2">
-                    <button
-                      className=" bg-purple-600 text-white px-3 rounded-md shadow-sm hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-opacity-50"
-                      onClick={() => handleDeleteService(service.id)}
-                    >
-                      Delete
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            ))}
+            
           </tbody>
         </table>
       </div>

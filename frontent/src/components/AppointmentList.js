@@ -6,9 +6,14 @@ import api from "../services/api";
 
 const AppointmentList = () => {
   const [appointments, setAppointments] = useState([]);
+  const [color , setColor ] = useState("light")
   const { user } = useContext(AuthContext);
   const { logout } = useContext(AuthContext);
   const navigate = useNavigate();
+
+  const click = () => {
+    if (color !== "light") setColor("ligth"); else setColor("dark")
+  }
 
   useEffect(() => {
     const fetchAppointments = async () => {
@@ -25,6 +30,7 @@ const AppointmentList = () => {
     };
 
     fetchAppointments();
+     
   }, [user]);
 
   const toggleChecklistItemStatus = async (appointmentId, itemIndex) => {
@@ -113,12 +119,7 @@ const AppointmentList = () => {
     const lower = word.toLowerCase();
     return lower.charAt(0).toUpperCase() + lower.slice(1);
   };
-
-  const handleclick = () =>{
-    document.getElementById("button").value="Close";
-    console.log("click")
-  }
-
+   
   return (
     <div>
       {" "}
@@ -199,7 +200,7 @@ const AppointmentList = () => {
               {renderChecklist(appointment, toggleChecklistItemStatus)}{" "}
             </div>{" "}
             <div className=" d-flex align-items-end ">
-              <button className="btn btn-outline-success" id ="button" onClick={()=>handleclick()}>done</button>
+              <button className="btn " onClick={click}>done</button>
             </div>
           </li>
         ))}{" "}

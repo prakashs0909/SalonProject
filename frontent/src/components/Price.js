@@ -20,23 +20,40 @@ const Price = () => {
     fetchServices();
   }, []);
 
-  const capitalize = (word)=>{
-    if (word==="danger") {
-      word = "error"
+  const capitalize = (word) => {
+    if (word === "danger") {
+      word = "error";
     }
-      const lower = word.toLowerCase();
-      return lower.charAt(0).toUpperCase() + lower.slice(1);
-  }
+    const lower = word.toLowerCase();
+    return lower.charAt(0).toUpperCase() + lower.slice(1);
+  };
 
-  // let a = service.time
-  // let b;
-  //   if(a <= 5){
-  //       console.log(a);
-  //       b= 'hrs'
-  //   } 
-  //   else {
-  //       b= 'min';
-  //   }
+  let result;
+  result = services.map((service) => {
+    let unit;
+    if (service.time <= 5) {
+      unit = "hrs";
+    } else {
+      unit = "min";
+    }
+    return (
+      <div className="p-4" key={service.id}>
+        <div className="bg-white rounded-lg p-6 border border-gray-300 shadow-md">
+          <h2 className="text-xl font-semibold text-gray-900 mb-4">
+            {capitalize(service.name)}
+          </h2>
+          <p className="text-lg text-gray-800 mb-2 font-medium">
+            Rs {service.price}
+          </p>
+          {/* Example time, replace with actual service time */}
+          <p className="text-gray-600 mb-2">
+            Time: {service.time} {unit}{" "}
+          </p>
+        </div>
+      </div>
+    );
+  });
+
   return (
     <div>
       <section className="text-gray-600 body-font">
@@ -109,24 +126,27 @@ const Price = () => {
               and prices provided by a business.
             </p>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-0">
+          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-0" >
             {loading ? (
               <p>Loading services...</p>
-            ) : (
-              services.map((service) => (
-                <div className="p-4" key={service.id}>
-                  <div className="bg-white rounded-lg p-6 border border-gray-300 shadow-md">
-                    <h2 className="text-xl font-semibold text-gray-900 mb-4">
-                      {capitalize(service.name)}
-                    </h2>
-                    <p className="text-lg text-gray-800 mb-2 font-medium">
-                      Rs {service.price}
-                    </p>
-                    {/* Example time, replace with actual service time */}
-                    <p className="text-gray-600 mb-2">Time: {service.time} min</p>
-                  </div>
-                </div>
-              ))
+            ) : (result
+              // <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-0">
+              //   { result }
+              // </div>
+              // services.map((service) => (
+              //   <div className="p-4" key={service.id}>
+              //     <div className="bg-white rounded-lg p-6 border border-gray-300 shadow-md">
+              //       <h2 className="text-xl font-semibold text-gray-900 mb-4">
+              //         {capitalize(service.name)}
+              //       </h2>
+              //       <p className="text-lg text-gray-800 mb-2 font-medium">
+              //         Rs {service.price}
+              //       </p>
+              //       {/* Example time, replace with actual service time */}
+              //       <p className="text-gray-600 mb-2">Time: {service.time} {} </p>
+              //     </div>
+              //   </div>
+              // ))
             )}
           </div>
         </div>
