@@ -126,6 +126,13 @@ const Navbar = () => {
           >
             About
           </Link>
+          <Link
+            className="block md:inline-block p-2 md:mt-0 mr-5 hover:text-violet-400 text-white md:text-lg"
+            to="/MyAppointments"
+            onClick={closeMenu}
+          >
+            my history
+          </Link>
 
           <Link
             className="block md:inline-block p-2 md:mt-0 mr-5 hover:text-violet-400 text-white md:text-lg"

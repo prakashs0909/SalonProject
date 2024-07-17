@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../context/AuthContext'; // Import your AuthContext
-import api from "../services/api"
+
 
 const MyAppointments = () => {
   const [appointments, setAppointments] = useState([]);
@@ -14,7 +14,7 @@ const MyAppointments = () => {
       // if (!user) return; // If no user is logged in, return early
       try {
         if(user){
-        const response = await axios.get('http://127.0.0.1:8000/appointments/appointments/', {
+        const response = await axios.get('http://127.0.0.1:8000/api/user/appointments/', {
           headers: {
             'Authorization': `Bearer ${user.token}`, // Include the user's token in the headers
           }
