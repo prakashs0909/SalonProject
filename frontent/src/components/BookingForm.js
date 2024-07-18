@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from '../context/AuthContext';
 
 const BookingForm = (props) => {
   const navigate = useNavigate();
+  const { user } = useContext(AuthContext);
 
   const [appointmentData, setAppointmentData] = useState({
-    user :" ",
+    user: user ? user.id : "",
     customer_name: "",
     appointment_date: "",
     appointment_time: "",
@@ -15,6 +17,7 @@ const BookingForm = (props) => {
 
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     const fetchServices = async () => {
@@ -30,9 +33,14 @@ const BookingForm = (props) => {
     fetchServices();
   }, []);
 
-  const [error, setError] = useState("");
-
-  // const predefinedServices = ["Haircut", "Shave", "Facial", "Manicure", "Pedicure"];
+  useEffect(() => {
+    if (user) {
+      setAppointmentData((prevData) => ({
+        ...prevData,
+        user: user.id,
+      }));
+    }
+  }, [user]);
 
   const generateTimeSlots = () => {
     const times = [];
@@ -63,8 +71,7 @@ const BookingForm = (props) => {
       return { ...prevData, checklist };
     });
   };
-  
-  
+
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -93,7 +100,7 @@ const BookingForm = (props) => {
       .then((response) => {
         console.log("Appointment booked successfully:", response.data);
         setAppointmentData({
-          user : " ",
+          user: user ? user.id : "",
           customer_name: "",
           appointment_date: "",
           appointment_time: "",
@@ -104,17 +111,17 @@ const BookingForm = (props) => {
         // navigate("/BookingForm"); // Replace with your success page path
       })
       .catch((error) => {
-        props.showalert("This slot is already booked please change the time or date", "danger");
+        props.showalert("This slot is already booked, please change the time or date", "danger");
         console.error("Error booking appointment:", error);
       });
   };
 
-  const capitalize = (word)=>{
-    if (word==="danger") {
-      word = "error"
+  const capitalize = (word) => {
+    if (word === "danger") {
+      word = "error";
     }
-      const lower = word.toLowerCase();
-      return lower.charAt(0).toUpperCase() + lower.slice(1);
+    const lower = word.toLowerCase();
+    return lower.charAt(0).toUpperCase() + lower.slice(1);
   };
 
   return (
@@ -145,36 +152,10 @@ const BookingForm = (props) => {
         </li>
       </ul>
       <div className="bg-gray-200 p-5 pt-3">
-        <form className="mx-auto max-w-lg" onSubmit={handleSubmit} >
-          <h2 className="text-4xl font-bold text-gray-800 mb-6">
-            Book Appointment
-          </h2>
+        <form className="mx-auto max-w-lg" onSubmit={handleSubmit}>
+          <h2 className="text-4xl font-bold text-gray-800 mb-6">Book Appointment</h2>
           <div className="mb-4">
-            
-            
-            <label
-              htmlFor="username"
-              className="block text-gray-700 font-medium"
-            >
-              User Name:
-              <input
-                type="number"
-                className="form-input mt-1 block w-full h-12 border-gray-300 rounded-md shadow-sm focus:border-purple-400 focus:ring focus:ring-purple-400 focus:ring-opacity-50 px-3"
-                id="user"
-                placeholder="Enter your name"
-                value={appointmentData.user}
-                onChange={(e) =>
-                  setAppointmentData({
-                    ...appointmentData,
-                    user: e.target.value,
-                  })
-                }
-              />
-            </label>
-            <label
-              htmlFor="customerName"
-              className="block text-gray-700 font-medium"
-            >
+            <label htmlFor="customerName" className="block text-gray-700 font-medium">
               Customer Name:
               <input
                 type="text"
@@ -193,10 +174,7 @@ const BookingForm = (props) => {
           </div>
 
           <div className="mb-4">
-            <label
-              htmlFor="appointmentDate"
-              className="block text-gray-700 font-medium"
-            >
+            <label htmlFor="appointmentDate" className="block text-gray-700 font-medium">
               Date:
               <input
                 type="date"
@@ -214,10 +192,7 @@ const BookingForm = (props) => {
           </div>
 
           <div className="mb-4">
-            <label
-              htmlFor="appointmentTime"
-              className="block text-gray-700 font-medium"
-            >
+            <label htmlFor="appointmentTime" className="block text-gray-700 font-medium">
               Time:
               <select
                 className="form-select mt-1 block w-full h-12 border-gray-300 rounded-md shadow-sm focus:border-purple-400 focus:ring focus:ring-purple-400 focus:ring-opacity-50 px-3"
@@ -244,22 +219,18 @@ const BookingForm = (props) => {
 
           <div className="mb-4">
             <fieldset className="block">
-              <legend className="block text-gray-700 font-medium">
-                Select Services:
-              </legend>
+              <legend className="block text-gray-700 font-medium">Select Services:</legend>
               <div className="mt-2 space-y-2">
                 {services.map((service) => (
                   <div key={service.id} className="flex items-center">
                     <input
                       type="checkbox"
                       id={service.id}
-                      checked={appointmentData.checklist.some(
-                        (item) => item.text === service
-                      )}
+                      checked={appointmentData.checklist.some((item) => item.text === service)}
                       onChange={() => handleChecklistChange(service)}
                       className="form-check-input mt-0"
                     />
-                    <label htmlFor={service} className="ml-2 text-gray-700">
+                    <label htmlFor={service.id} className="ml-2 text-gray-700">
                       {capitalize(service.name)}
                     </label>
                   </div>

@@ -28,10 +28,8 @@ const AppointmentList = () => {
     fetchAppointments();
   }, [user]);
 
-
-
   const handleClick = () => {
-    setColor(prevColor => (prevColor === "red" ? "blue" : "red"));
+    setColor((prevColor) => (prevColor === "red" ? "blue" : "red"));
   };
   const toggleChecklistItemStatus = async (appointmentId, itemIndex) => {
     try {
@@ -200,13 +198,13 @@ const AppointmentList = () => {
               {renderChecklist(appointment, toggleChecklistItemStatus)}{" "}
             </div>{" "}
             <div className=" d-flex align-items-end ">
-            <button
-      className="btn"
-      style={{ color: color }}
-      onClick={handleClick}
-    >
-      Done
-    </button>
+              <button
+                className="btn"
+                style={{ color: color }}
+                onClick={handleClick}
+              >
+                Done
+              </button>
             </div>
           </li>
         ))}{" "}
@@ -234,7 +232,6 @@ const renderChecklist = (appointment, toggleChecklistItemStatus) => {
             /> */}
             <span className="">{item.text.name} </span>
           </li>
-          
         ))}
       </ul>
     </div>

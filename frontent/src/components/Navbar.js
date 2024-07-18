@@ -131,7 +131,7 @@ const Navbar = () => {
             to="/MyAppointments"
             onClick={closeMenu}
           >
-            my history
+            My History
           </Link>
 
           <Link

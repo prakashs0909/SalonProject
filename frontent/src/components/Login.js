@@ -15,7 +15,7 @@ const Login = () => {
         try {
             const response = await api.login(username, password);
             login(response.data);
-            console.log('Logged in successfully:', response.data);
+            // console.log('Logged in successfully:', response.data);
             navigate("/AppointmentList");
             
             
