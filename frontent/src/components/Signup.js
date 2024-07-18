@@ -62,7 +62,7 @@ const Signup = () => {
                         <div className='pt-1 font-bold'>
                             <p>Already have a account please login</p>
                         </div>
-                        <button type="submit" className="flex justify-center rounded-md bg-indigo-600  ml-7 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" onClick={()=> navigate('/Login')}>Login</button>
+                        <button type="submit" className="flex justify-center rounded-md bg-indigo-600  ml-7 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" onClick={()=> navigate('/')}>Login</button>
                     </div>
                 </form>
 

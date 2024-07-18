@@ -13,7 +13,7 @@ const Home = () => {
           backgroundImage:
             "url(https://png.pngtree.com/background/20230610/original/pngtree-hair-salon-with-black-lighting-and-chandelier-picture-image_3105657.jpg)",
           width: "100%",
-          height: "auto",
+          height: "100%",
         }}
       >
         <div className="mx-auto max-w-2xl py-32 sm:py-50 lg:py-56">

@@ -125,7 +125,7 @@ const AppointmentList = () => {
         {" "}
         <button
           className="d-flex border-0 btn btn-outline-light fs-4"
-          onClick={() => navigate("/")}
+          onClick={() => navigate("/Home")}
         >
           {" "}
           <svg

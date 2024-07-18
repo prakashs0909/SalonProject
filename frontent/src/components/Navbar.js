@@ -19,7 +19,7 @@ const Navbar = () => {
     c = "/AdminService"
     d = "Admin Service"
   } else {
-    a = "/login";
+    a = "/";
     b = "Login"
   }
 
@@ -93,7 +93,7 @@ const Navbar = () => {
         >
           <Link
             className="block md:inline-block p-2 md:mt-0 mr-5 hover:text-violet-400 text-white md:text-lg"
-            to="/"
+            to="/Home"
             onClick={closeMenu}
           >
             Home

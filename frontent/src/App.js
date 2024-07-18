@@ -47,14 +47,14 @@ const App = ()=>{
             </div>
           </MaybeShowAlert>
           <Routes>
-            <Route exact path="/" Component={Home} />
+            <Route exact path="/" Component={Login} />
+            <Route exact path="/Home" Component={Home} />
             <Route exact path="/About" Component={About} />
             <Route exact path="/Price" Component={Price} />
             <Route exact path="/BookingForm" element={<BookingForm showalert={showalert}/>} />
             <Route exact path="/Contact" Component={Contact} />
             <Route exact path="/Contact" Component={Contact} />
             <Route exact path="/AppointmentList" Component={AppointmentList} />
-            <Route exact path="/login" Component={Login} />
             <Route exact path="/Signup" Component={Signup} />
             <Route exact path="/AdminService" Component={AdminService} />
             <Route exact path="/MyAppointments" Component={MyAppointments} />

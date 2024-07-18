@@ -7,6 +7,7 @@ import {  useNavigate } from "react-router-dom";
 const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const { user } = useContext(AuthContext);
     const { login } = useContext(AuthContext);
     const navigate = useNavigate();
 
@@ -16,7 +17,12 @@ const Login = () => {
             const response = await api.login(username, password);
             login(response.data);
             // console.log('Logged in successfully:', response.data);
-            navigate("/AppointmentList");
+            if(user ===  "admin"){
+                navigate("/AppointmentList");
+            }
+            else{
+                navigate("/Home")
+            }
             
             
         } catch (error) {
