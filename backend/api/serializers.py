@@ -2,15 +2,13 @@ from rest_framework import serializers
 from .models import Appointment , Service
 from datetime import datetime 
 
-
-
 class AppointmentSerializer(serializers.ModelSerializer):
     checklist = serializers.JSONField(required=False)
     appointment_time = serializers.CharField() 
 
     class Meta:
         model = Appointment
-        fields = ['id', 'user' ,'customer_name', 'appointment_date', 'appointment_time', 'checklist']
+        fields = ['id', 'user', 'customer_name', 'appointment_date', 'appointment_time', 'checklist' , 'status']
     
     def validate_appointment_time(self, value):
         try:
@@ -24,8 +22,6 @@ class ServiceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Service
         fields = ['id', 'name', 'price', 'time']
-
-
 
 from rest_framework import serializers
 from django.contrib.auth.models import User

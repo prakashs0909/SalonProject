@@ -77,6 +77,7 @@ const AdminService = () => {
       const lower = word.toLowerCase();
       return lower.charAt(0).toUpperCase() + lower.slice(1);
   }
+  
   let result;
   result = services.map((service) => {
     let unit;

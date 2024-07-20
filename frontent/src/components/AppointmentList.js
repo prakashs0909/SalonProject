@@ -1,127 +1,182 @@
-import React, { useEffect, useState, useContext } from "react";
-import axios from "axios";
-import { AuthContext } from "../context/AuthContext";
+import React, { useEffect, useState, useContext, useCallback } from 'react';
+import axios from 'axios';
+import { AuthContext } from '../context/AuthContext';
+import Filters from './Filters';
+import AppointmentCard from './AppointmentCard';
 import { Link, useNavigate } from "react-router-dom";
 import api from "../services/api";
 
 const AppointmentList = () => {
-  const [color, setColor] = useState("red");
-  const [appointments, setAppointments] = useState([]);
-  const { user } = useContext(AuthContext);
-  const { logout } = useContext(AuthContext);
-  const navigate = useNavigate();
+    const [appointments, setAppointments] = useState([]);
+    const [filteredAppointments, setFilteredAppointments] = useState([]);
+    const [filter, setFilter] = useState({ search: '', sort: '', status: '' });
+    const { user } = useContext(AuthContext);
+    const { logout } = useContext(AuthContext);
+    const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchAppointments = async () => {
-      try {
-        if (user && user.id === 1) {
-          const response = await axios.get(
-            "http://localhost:8000/api/appointments/"
-          );
-          setAppointments(response.data);
+    useEffect(() => {
+        const fetchAppointments = async () => {
+            try {
+                if (user) {
+                    const response = await axios.get('http://localhost:8000/api/appointments/');
+                    setAppointments(response.data);
+                    setFilteredAppointments(response.data);
+                }
+            } catch (error) {
+                console.error('Error fetching appointments:', error);
+            }
+        };
+
+        fetchAppointments();
+    }, [user]);
+
+    const applyFilters = useCallback(() => {
+        let filtered = [...appointments];
+
+        // Filter by search term (customer name or date)
+        if (filter.search) {
+            filtered = filtered.filter(appointment =>
+                appointment.customer_name.toLowerCase().includes(filter.search.toLowerCase()) ||
+                appointment.appointment_date.includes(filter.search)
+            );
         }
-      } catch (error) {
-        console.error("Error fetching appointments:", error);
-      }
+
+        // Sort by date
+        if (filter.sort === 'oldest') {
+            filtered.sort((a, b) => new Date(a.appointment_date) - new Date(b.appointment_date));
+        } else if (filter.sort === 'newest') {
+            filtered.sort((a, b) => new Date(b.appointment_date) - new Date(a.appointment_date));
+        }
+
+        // Filter by appointment status
+        if (filter.status) {
+            filtered = filtered.filter(appointment => appointment.status === filter.status);
+        }
+
+        setFilteredAppointments(filtered);
+    }, [appointments, filter]);
+
+    useEffect(() => {
+        applyFilters();
+    }, [appointments, filter, applyFilters]);
+
+    const resetFilters = () => {
+        setFilter({ search: '', sort: '', status: '' });
     };
 
-    fetchAppointments();
-  }, [user]);
+    const toggleChecklistItemStatus = async (appointmentId, itemIndex) => {
+        try {
+            const appointment = appointments.find(app => app.id === appointmentId);
+            if (appointment) {
+                const updatedChecklist = appointment.checklist.map((item, index) => {
+                    if (index === itemIndex) {
+                        return { ...item, done: !item.done };
+                    }
+                    return item;
+                });
 
-  const handleClick = () => {
-    setColor((prevColor) => (prevColor === "red" ? "blue" : "red"));
-  };
-  const toggleChecklistItemStatus = async (appointmentId, itemIndex) => {
-    try {
-      const appointment = appointments.find((app) => app.id === appointmentId);
-      if (appointment) {
-        const updatedChecklist = appointment.checklist.map((item, index) => {
-          if (index === itemIndex) {
-            return { ...item, done: !item.done };
-          }
-          return item;
-        });
+                const convertTo12HourFormat = (timeString) => {
+                    const time = new Date(`1970-01-01T${timeString}`);
+                    const hours = time.getHours();
+                    const minutes = time.getMinutes();
+                    const ampm = hours >= 12 ? 'PM' : 'AM';
+                    const hours12 = hours % 12 || 12;
+                    const minutesStr = minutes < 10 ? `0${minutes}` : minutes;
+                    return `${hours12}:${minutesStr} ${ampm}`;
+                };
 
-        const convertTo12HourFormat = (timeString) => {
-          const time = new Date(`1970-01-01T${timeString}`);
-          const hours = time.getHours();
-          const minutes = time.getMinutes();
-          const ampm = hours >= 12 ? "PM" : "AM";
-          const hours12 = hours % 12 || 12;
-          const minutesStr = minutes < 10 ? `0${minutes}` : minutes;
-          return `${hours12}:${minutesStr} ${ampm}`;
-        };
+                const formattedAppointmentTime = convertTo12HourFormat(appointment.appointment_time);
 
-        const formattedAppointmentTime = convertTo12HourFormat(
-          appointment.appointment_time
-        );
+                const payload = {
+                    ...appointment,
+                    appointment_time: formattedAppointmentTime,
+                    checklist: updatedChecklist,
+                };
 
-        const payload = {
-          ...appointment,
-          appointment_time: formattedAppointmentTime,
-          checklist: updatedChecklist,
-        };
+                const response = await axios.put(`http://localhost:8000/api/appointments/${appointmentId}/`, payload, {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
 
-        const response = await axios.put(
-          `http://localhost:8000/api/appointments/${appointmentId}/`,
-          payload,
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-
-        setAppointments((prevAppointments) =>
-          prevAppointments.map((app) => {
-            if (app.id === appointmentId) {
-              return response.data;
+                setAppointments(prevAppointments => prevAppointments.map(app => {
+                    if (app.id === appointmentId) {
+                        return response.data;
+                    }
+                    return app;
+                }));
             }
-            return app;
-          })
-        );
-      }
-    } catch (error) {
-      console.error("Error updating checklist item status:", error);
-      if (error.response) {
-        console.log("Error response:", error.response.data);
-      }
-    }
-  };
+        } catch (error) {
+            console.error('Error updating checklist item status:', error);
+            if (error.response) {
+                console.log('Error response:', error.response.data);
+            }
+        }
+    };
 
-  if (!user) {
+    const toggleAppointmentStatus = async (appointmentId) => {
+        try {
+            const appointment = appointments.find(app => app.id === appointmentId);
+            if (appointment) {
+                const updatedStatus = appointment.status === 'pending' ? 'done' : 'pending';
+
+                const convertTo12HourFormat = (timeString) => {
+                    const time = new Date(`1970-01-01T${timeString}`);
+                    const hours = time.getHours();
+                    const minutes = time.getMinutes();
+                    const ampm = hours >= 12 ? 'PM' : 'AM';
+                    const hours12 = hours % 12 || 12;
+                    const minutesStr = minutes < 10 ? `0${minutes}` : minutes;
+                    return `${hours12}:${minutesStr} ${ampm}`;
+                };
+
+                const formattedAppointmentTime = convertTo12HourFormat(appointment.appointment_time);
+
+                const payload = {
+                    ...appointment,
+                    appointment_time: formattedAppointmentTime,
+                    status: updatedStatus,
+                };
+
+                const response = await axios.put(`http://localhost:8000/api/appointments/${appointmentId}/`, payload, {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                setAppointments(prevAppointments => prevAppointments.map(app => {
+                    if (app.id === appointmentId) {
+                        return response.data;
+                    }
+                    return app;
+                }));
+            }
+        } catch (error) {
+            console.error('Error updating appointment status:', error);
+            if (error.response) {
+                console.log('Error response:', error.response.data);
+            }
+        }
+    };
+
+    if (!user) {
+        return <p className="text-center mt-4">Please log in to view appointments.</p>;
+    }
+
+    const handleLogout = async () => {
+        try {
+          await api.logout();
+          logout();
+          navigate("/");
+          console.log("Logged out successfully");
+        } catch (error) {
+          console.error("Logout error:", error);
+        }
+      };
+
     return (
-      <p className="text-center mt-4">Please log in to view appointments.</p>
-    );
-  }
-
-  const formatTime = (timeString) => {
-    const time = new Date(`1970-01-01T${timeString}`);
-    return time.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
-  };
-
-  const handleLogout = async () => {
-    try {
-      await api.logout();
-      logout();
-      navigate("/");
-      console.log("Logged out successfully");
-    } catch (error) {
-      console.error("Logout error:", error);
-    }
-  };
-  const capitalize = (word) => {
-    if (word === "danger") {
-      word = "error";
-    }
-    const lower = word.toLowerCase();
-    return lower.charAt(0).toUpperCase() + lower.slice(1);
-  };
-
-  return (
-    <div>
-      {" "}
-      <ul className="flex items-center bg-gray-800 justify-content-between p-2 fixed-top">
+        <div className="container mx-auto mt-8 px-4">
+            <ul className="flex items-center bg-gray-800 justify-content-between p-2 fixed-top">
         {" "}
         <button
           className="d-flex border-0 btn btn-outline-light fs-4"
@@ -171,71 +226,21 @@ const AppointmentList = () => {
           </svg>{" "}
         </button>{" "}
       </ul>{" "}
-      <div className="mt-16 p-3">
-        {appointments.map((appointment) => (
-          <li
-            key={appointment.id}
-            className="bg-gray-100 border border-gray-300 mb-4 p-4 rounded-lg shadow-md d-flex fs-5 "
-          >
-            <div className="fw-bold text-1xl  ">{appointment.id}</div>{" "}
-            <div className="ms-2 me-auto">
-              {" "}
-              <div className="fw-bold text-1xl ">
-                {capitalize(appointment.customer_name)}
-              </div>{" "}
-              <p className="font-semibold">
-                Date:{" "}
-                <span className="text-gray-700">
-                  {appointment.appointment_date}
-                </span>
-              </p>{" "}
-              <p className="font-semibold">
-                Time:{" "}
-                <span className="text-gray-700">
-                  {formatTime(appointment.appointment_time)}
-                </span>
-              </p>{" "}
-              {renderChecklist(appointment, toggleChecklistItemStatus)}{" "}
-            </div>{" "}
-            <div className=" d-flex align-items-end ">
-              <button
-                className="btn"
-                style={{ color: color }}
-                onClick={handleClick}
-              >
-                Done
-              </button>
-            </div>
-          </li>
-        ))}{" "}
-      </div>
-    </div>
-  );
-};
 
-const renderChecklist = (appointment, toggleChecklistItemStatus) => {
-  if (!appointment.checklist || !Array.isArray(appointment.checklist)) {
-    return <p className="text-gray-700 mt-2">No checklist items</p>;
-  }
+            <Filters filter={filter} setFilter={setFilter} resetFilters={resetFilters} />
 
-  return (
-    <div className="mt-2  ">
-      <ul className="list-none ">
-        <p className="font-semibold">List:</p>
-        {appointment.checklist.map((item, index) => (
-          <li key={index} className="flex items-center py-1 ">
-            {/* <input
-              type="checkbox"
-              checked={item.done}
-              onChange={() => toggleChecklistItemStatus(appointment.id, index)}
-              className="mr-2"
-            /> */}
-            <span className="">{item.text.name} </span>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
+            <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {filteredAppointments.map(appointment => (
+                    <AppointmentCard
+                        key={appointment.id}
+                        appointment={appointment}
+                        toggleAppointmentStatus={toggleAppointmentStatus}
+                        toggleChecklistItemStatus={toggleChecklistItemStatus}
+                    />
+                ))}
+            </ul>
+        </div>
+    );
 };
 
 export default AppointmentList;
