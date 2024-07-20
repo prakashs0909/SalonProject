@@ -21,7 +21,9 @@ import {
   Route,
 } from "react-router-dom";
 
+
 const App = ()=>{
+  
   const [alert, setAlert] = useState(null);
 
   const showalert=(message, type)=>{
@@ -42,9 +44,10 @@ const App = ()=>{
             <Navbar/>
           </MaybeShowNavbar>
           <MaybeShowAlert>
-            <div className="mt-16 pt-2 bg-gray-200"> 
+            {/* <div className="mt-16 pt-2 bg-gray-200"> */}
+
               <Alerts alert={alert}/>
-            </div>
+            {/* </div> */}
           </MaybeShowAlert>
           <Routes>
             <Route exact path="/" Component={Login} />
