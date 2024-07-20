@@ -5,7 +5,7 @@ import { AuthContext } from "../context/AuthContext";
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { user } = useContext(AuthContext);
-  let a,b,c,d;
+  let a, b, c, d;
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -13,14 +13,14 @@ const Navbar = () => {
   const closeMenu = () => {
     setIsOpen(false);
   };
-  if (user) {
+  if (user && user.id === 1) {
     a = "/AppointmentList";
     b = "Appointment List";
-    c = "/AdminService"
-    d = "Admin Service"
+    c = "/AdminService";
+    d = "Admin Service";
   } else {
-    a = "/";
-    b = "Login"
+    a = "/MyAppointments";
+    b = "My History";
   }
 
   return (
@@ -126,13 +126,6 @@ const Navbar = () => {
           >
             About
           </Link>
-          <Link
-            className="block md:inline-block p-2 md:mt-0 mr-5 hover:text-violet-400 text-white md:text-lg"
-            to="/MyAppointments"
-            onClick={closeMenu}
-          >
-            My History
-          </Link>
 
           <Link
             className="block md:inline-block p-2 md:mt-0 mr-5 hover:text-violet-400 text-white md:text-lg"
@@ -141,6 +134,7 @@ const Navbar = () => {
           >
             {b}
           </Link>
+
           <Link
             className="block md:inline-block p-2 md:mt-0 mr-5 hover:text-violet-400 text-white md:text-lg"
             to={c}

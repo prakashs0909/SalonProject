@@ -6,7 +6,7 @@ const MaybeShowNavbar = ({children}) => {
     const [ShowNavbar, setShowNavbar] = useState(false)
 
     useEffect(()=>{
-        if(location.pathname === '/BookingForm' || location.pathname === '/AppointmentList' || location.pathname === '/'){
+        if(location.pathname === '/BookingForm' || location.pathname === '/AppointmentList' || location.pathname === '/' || location.pathname === '/MyAppointments' || location.pathname === '/Signup'){
             setShowNavbar(false)
         }
         else{

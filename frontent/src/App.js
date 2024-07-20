@@ -55,7 +55,7 @@ const App = ()=>{
             <Route exact path="/Contact" Component={Contact} />
             <Route exact path="/Contact" Component={Contact} />
             <Route exact path="/AppointmentList" Component={AppointmentList} />
-            <Route exact path="/Signup" Component={Signup} />
+            <Route exact path="/Signup" element={<Signup showalert={showalert} />} />
             <Route exact path="/AdminService" Component={AdminService} />
             <Route exact path="/MyAppointments" Component={MyAppointments} />
             

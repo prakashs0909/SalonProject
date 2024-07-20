@@ -75,18 +75,32 @@ const BookingForm = (props) => {
   const handleSubmit = (event) => {
     event.preventDefault();
 
+    const currentDate = new Date();
+    const selectedDate = new Date(appointmentData.appointment_date);
+    const selectedTime = new Date(`1970-01-01T${appointmentData.appointment_time}`);
+
     if (!appointmentData.customer_name) {
       setError("Customer name is required.");
       return;
     }
 
     if (!appointmentData.appointment_date) {
-      setError("Appointment date is required.");
+      setError('Appointment date is required.');
       return;
     }
 
     if (!appointmentData.appointment_time) {
-      setError("Appointment time is required.");
+      setError('Appointment time is required.');
+      return;
+    }
+
+    if (selectedDate < currentDate.setHours(0, 0, 0, 0)) {
+      setError('Cannot book an appointment in the past.');
+      return;
+    }
+
+    if (selectedDate.toDateString() === currentDate.toDateString() && selectedTime < new Date()) {
+      setError('Cannot book an appointment in the past time.');
       return;
     }
 
@@ -124,6 +138,8 @@ const BookingForm = (props) => {
     return lower.charAt(0).toUpperCase() + lower.slice(1);
   };
 
+  const minDate = new Date().toISOString().split('T')[0];
+
   return (
     <div>
       <ul className="flex items-center justify-between bg-gray-800 p-4 fixed-top">
@@ -146,7 +162,7 @@ const BookingForm = (props) => {
           </button>
         </li>
         <li>
-          <Link to="/" className="text-white">
+          <Link to="/Home" className="text-white">
             Home
           </Link>
         </li>
@@ -181,6 +197,7 @@ const BookingForm = (props) => {
                 className="form-input mt-1 block w-full h-12 border-gray-300 rounded-md shadow-sm focus:border-purple-400 focus:ring focus:ring-purple-400 focus:ring-opacity-50 px-3"
                 id="appointmentDate"
                 value={appointmentData.appointment_date}
+                min = {minDate}
                 onChange={(e) =>
                   setAppointmentData({
                     ...appointmentData,
@@ -221,7 +238,10 @@ const BookingForm = (props) => {
             <fieldset className="block">
               <legend className="block text-gray-700 font-medium">Select Services:</legend>
               <div className="mt-2 space-y-2">
-                {services.map((service) => (
+              {loading ? (
+              <p>Loading services...</p>
+              ) : (
+                services.map((service) => (
                   <div key={service.id} className="flex items-center">
                     <input
                       type="checkbox"
@@ -234,7 +254,8 @@ const BookingForm = (props) => {
                       {capitalize(service.name)}
                     </label>
                   </div>
-                ))}
+                ))
+              )}
               </div>
             </fieldset>
           </div>

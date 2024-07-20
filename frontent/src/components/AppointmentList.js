@@ -14,7 +14,7 @@ const AppointmentList = () => {
   useEffect(() => {
     const fetchAppointments = async () => {
       try {
-        if (user) {
+        if (user && user.id === 1) {
           const response = await axios.get(
             "http://localhost:8000/api/appointments/"
           );

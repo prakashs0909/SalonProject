@@ -6,7 +6,7 @@ const MaybeShowAlert = ({children}) => {
     const [ShowAlert, setShowAlert] = useState(false)
 
     useEffect(()=>{
-        if(location.pathname === '/BookingForm' ){
+        if(location.pathname === '/BookingForm' || location.pathname === '/Signup'){
             setShowAlert(true)
         }
         else{
